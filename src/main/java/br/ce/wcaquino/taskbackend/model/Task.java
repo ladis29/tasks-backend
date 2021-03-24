@@ -2,47 +2,73 @@ package br.ce.wcaquino.taskbackend.model;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-@Entity
 public class Task {
-
 	private Long id;
-	
-	@Column(nullable = false)
 	private String task;
-	
-	@Column(nullable = false)
 	private LocalDate dueDate;
-	
-	public Task() {}
 
-	@Id
-	@GeneratedValue
+	public Task(Long id, String task, LocalDate dueDate) {
+		this.id = id;
+		this.task = task;
+		this.dueDate = dueDate;
+	}
+
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public String getTask() {
 		return task;
-	}
-
-	public void setTask(String task) {
-		this.task = task;
 	}
 	
 	public LocalDate getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(LocalDate dueDate) {
-		this.dueDate = dueDate;
+	@Override
+	public String toString() {
+		return "Task [id=" + id + ", task=" + task + ", dueDate=" + dueDate + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((dueDate == null) ? 0 : dueDate.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((task == null) ? 0 : task.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Task other = (Task) obj;
+		if (dueDate == null) {
+			if (other.dueDate != null)
+				return false;
+		} else if (!dueDate.equals(other.dueDate))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (task == null) {
+			if (other.task != null)
+				return false;
+		} else if (!task.equals(other.task))
+			return false;
+		return true;
+	}
+	
+	@Override
+	public Task clone() {
+		return new Task(id, task, dueDate);
 	}
 }
