@@ -64,18 +64,23 @@ pipeline{
                 }
             }
         }
-        #stage('Deploy Prod'){
-        #    steps{
-        #        sh 'docker-compose up -d'
-        #    }
-        #}
-        #stage ('Health Check') {
-        #    steps {
-        #        sleep(5)
-        #        dir('functional-test'){
-        #            sh 'mvn verify -Dskip.surefile.tests'
-        #        }
-        #    }
-        #}
+        //stage('Deploy Prod'){
+        //    steps{
+        //        sh 'docker-compose up -d'
+        //    }
+        //}
+        //stage ('Health Check') {
+        //    steps {
+        //        sleep(5)
+        //        dir('functional-test'){
+        //            sh 'mvn verify -Dskip.surefile.tests'
+        //        }
+        //    }
+        //}
+    }
+    post{
+        always{
+            junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml, api-test/target/surefire-reports/*.xml, functional-test/target/surefire-reports/*.xml'
+        }
     }
 }
